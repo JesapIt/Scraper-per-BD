@@ -1,9 +1,16 @@
+import base64
+from pathlib import Path
 import streamlit as st
 import pandas as pd
 import requests as request
 
 # List of main Italian cities
-italian_cities = ["Milano", "Roma", "Napoli",  "Bologna", "Firenze"]
+italian_cities = ["Milano", "Roma", "Napoli", "Bologna", "Firenze"]
+
+def read_pdf_file(pdf_path):
+    with open(pdf_path, "rb") as file:
+        base64_pdf = base64.b64encode(file.read()).decode("utf-8")
+    return f'<iframe src="data:application/pdf;base64,{base64_pdf}" width="800px" height="2100px" type="application/pdf"></iframe>'
 
 def scrape(category, cities, num_pages):
     base_url = "https://www.paginegialle.it"
@@ -76,9 +83,14 @@ def scrape(category, cities, num_pages):
 
 def main():
     st.title("Scraping Pagine Gialle")
-
+    with st.expander("!"):
+        pdf_path = Path(r"C:\Users\user\Desktop\Streamlit Dev\Istruzioni_Scraping .pdf")
+        pdf_display = read_pdf_file(pdf_path)
+        st.markdown(pdf_display, unsafe_allow_html=True)
     # Inserimento dati
     category = st.text_input("Inserisci la categoria:", "")
+    
+    
     
     selected_cities = st.multiselect("Seleziona le città italiane:", italian_cities)
     num_pages = st.slider("Numero di pagine da cercare:", 1, 10, 1)
@@ -92,9 +104,8 @@ def main():
             st.subheader(f"{city}:")
             st.write(df)
 
+        
+       
+
 if __name__ == "__main__":
     main()
-
-
-#Agg sidebar 
-#PDF funzionamento 
