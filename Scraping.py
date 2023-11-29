@@ -82,27 +82,31 @@ def scrape(category, cities, num_pages):
     return results_by_city
 
 def main():
-    st.title("Scraping Pagine Gialle")
-    with st.expander("!"):
-        pdf_path = Path(r"C:\Users\user\Desktop\Streamlit Dev\Istruzioni_Scraping .pdf")
-        pdf_display = read_pdf_file(pdf_path)
-        st.markdown(pdf_display, unsafe_allow_html=True)
-    # Inserimento dati
-    category = st.text_input("Inserisci la categoria:", "")
-    
-    
-    
-    selected_cities = st.multiselect("Seleziona le città italiane:", italian_cities)
-    num_pages = st.slider("Numero di pagine da cercare:", 1, 10, 1)
+    tab1, tab2 = st.tabs(["Scraper", "Guida all'uso"])
+    with tab1:
+        st.title("Scraping Pagine Gialle")
+        #with st.expander("!"):
+            #pdf_path = Path(r"Istruzioni_Scraping.pdf")
+            #pdf_display = read_pdf_file(pdf_path)
+            #st.markdown(pdf_display, unsafe_allow_html=True)
+        # Inserimento dati
+        category = st.text_input("Inserisci la categoria:", "")
+        
+        
+        
+        selected_cities = st.multiselect("Seleziona le città italiane:", italian_cities)
+        num_pages = st.slider("Numero di pagine da cercare:", 1, 10, 1)
 
-    if st.button("Esegui scraping"):
-        # Bottone Avvio
-        results = scrape(category, selected_cities, num_pages)
+        if st.button("Esegui scraping"):
+            # Bottone Avvio
+            results = scrape(category, selected_cities, num_pages)
 
-        st.subheader("")
-        for city, df in results.items():
-            st.subheader(f"{city}:")
-            st.write(df)
+            st.subheader("")
+            for city, df in results.items():
+                st.subheader(f"{city}:")
+                st.write(df)
+    with tab2:
+        st.markdown('### Guida \n Il codice è strutturato come uno script interattivo che consente agli utenti di **specificare la categoria di aziende, le città di interesse e il numero di pagine da cercare**.\n \nL\'obiettivo principale è **estrarre informazioni aziendali**, come nomi, indirizzi, numeri di telefono, e-mail, e altro, per la categoria specificata in diverse città italiane.\n\n L’utente dovrà procedere all’inserimento nella voce “Inserisci la categoria:” della figura professionale / società che desidera cercare. *Ad esempio, può inserire "ristorante", "hotel", "parrucchiere", ecc*. **La declinazione al plurale non altera i risultati dello scraping, l’inserimento di “ristoranti” al posto di “ristorante” restituirà gli stessi risultati**.\n\nIl pulsante "Esegui scraping" invierà richieste al sito web delle Pagine Gialle e recupererà le informazioni desiderate per la categoria e le città selezionate.\n\nI risultati dello scraping vengono presentati in forma tabellare per ciascuna città selezionata.\n\n  **Ogni tabella mostra informazioni dettagliate sulle aziende trovate, organizzate per nome azienda, indirizzo, provincia, città, CAP, partita IVA, numeri di telefono, WhatsApp, e-mail, sito web e un link alle Pagine Gialle**. \n\n **È possibile scaricare la tabella muovendo il cursore in alto a destra della tabella, il file scaricato sarà un file CVS** (compatibile con Google Sheets o Excel).')
 
         
        
