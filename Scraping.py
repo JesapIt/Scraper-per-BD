@@ -70,9 +70,9 @@ def scrape(category, cities, num_pages):
                         pass
 
                     city_results[ds_ragsoc] = {'indirizzo': addr, 'prov': prov, 'città': loc, 'cap': zip_cod, 'P. IVA': PIVA,
-                                          'telefoni': ds_ls_telefoni, 'whatsapp': whatsapp, 'email': email,
-                                          'sito web': site_link,
-                                          'pagine gialle': p_link}
+                                        'telefoni': ds_ls_telefoni, 'whatsapp': whatsapp, 'email': email,
+                                        'sito web': site_link,
+                                        'pagine gialle': p_link}
 
         df = pd.DataFrame.from_dict(city_results, orient='index')
         df.reset_index(inplace=True)
@@ -109,7 +109,7 @@ def main():
         st.markdown('### Guida \n Il codice è strutturato come uno script interattivo che consente agli utenti di **specificare la categoria di aziende, le città di interesse e il numero di pagine da cercare**.\n \nL\'obiettivo principale è **estrarre informazioni aziendali**, come nomi, indirizzi, numeri di telefono, e-mail, e altro, per la categoria specificata in diverse città italiane.\n\n L’utente dovrà procedere all’inserimento nella voce “Inserisci la categoria:” della figura professionale / società che desidera cercare. *Ad esempio, può inserire "ristorante", "hotel", "parrucchiere", ecc*. **La declinazione al plurale non altera i risultati dello scraping, l’inserimento di “ristoranti” al posto di “ristorante” restituirà gli stessi risultati**.\n\nIl pulsante "Esegui scraping" invierà richieste al sito web delle Pagine Gialle e recupererà le informazioni desiderate per la categoria e le città selezionate.\n\nI risultati dello scraping vengono presentati in forma tabellare per ciascuna città selezionata.\n\n  **Ogni tabella mostra informazioni dettagliate sulle aziende trovate, organizzate per nome azienda, indirizzo, provincia, città, CAP, partita IVA, numeri di telefono, WhatsApp, e-mail, sito web e un link alle Pagine Gialle**. \n\n **È possibile scaricare la tabella muovendo il cursore in alto a destra della tabella, il file scaricato sarà un file CVS** (compatibile con Google Sheets o Excel).')
 
         
-       
+    
 
 if __name__ == "__main__":
     main()
